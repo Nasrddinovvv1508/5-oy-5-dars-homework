@@ -108,8 +108,18 @@ document.addEventListener('DOMContentLoaded', function() {
             let isDelete = confirm('Are you sure?');
 
             if (isDelete) {
-                let parent_id = this.parentNode.getAttribute('data-id').substring(5);
-                console.log(parent_id);
+                let id = this.parentNode.getAttribute('data-id').substring(5);
+                data = data.filter((phone) => {
+                    return phone.id != id
+                })
+
+                localStorage.setItem('phones', JSON.stringify(data))
+
+                tbody.innerHTML = '';
+                data.length && data.forEach((phone, index) => {
+                    let tr = createRow(phone, index + 1);
+                    tbody.innerHTML += tr;
+                })
             }
         })
     })
